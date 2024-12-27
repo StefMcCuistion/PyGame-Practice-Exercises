@@ -19,7 +19,6 @@ def display_spr(name, screen, pos):
     img = pg.image.load(f'img/spr_{name}.png') # Loads img
     x, y = screen.get_size() # Retrieves screen size
     w, h = img.get_size() # Retrieves img dimensions
-    # Determines ratio of 5120x2880 to current resolution
     ratio = find_ratio(x)
     # Uses ratio to resize img appropriately for current resolution
     img = pg.transform.scale(img, (w*ratio, h*ratio))
