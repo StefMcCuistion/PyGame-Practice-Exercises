@@ -17,7 +17,7 @@ def main():
     os.environ['SDL_VIDEO_CENTERED'] = '1' # centers window when not in fullscreen
     pg.init()
     pg.font.init()
-    ctypes.windll.user32.SetProcessDPIAware() # keeps windows GUI scale settings from messing with resolution
+    ctypes.windll.user32.SetProcessDPIAware() # keeps Windows GUI scale settings from messing with resolution
     clock = pg.time.Clock()
     pg.display.set_caption("Stef's Practice Game")
     screen = pg.display.set_mode((1280, 720))
