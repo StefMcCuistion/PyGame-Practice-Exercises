@@ -1,7 +1,20 @@
-import pygame, sys
+import pygame
+from sys import exit
+
+def start_menu(screen):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+        pygame.display.update()
 
 def main():
-    print("Hello world!")
+    pygame.init()
+    screen = pygame.display.set_mode((1280, 720))
+    
+    start_menu(screen)
+
 
 if __name__ == '__main__':
     main()
