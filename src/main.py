@@ -8,13 +8,18 @@ def display_bg(name, screen):
     x, y = screen.get_size() # Retrieves screen size
     pg.transform.scale(img, (x, y), screen) # Resizes img to screen size and blits it
 
-def display_spr(name, screen):
+def display_spr(name, screen, pos):
     img = pg.image.load(f'img/spr_{name}.png') # Loads img
     x, y = screen.get_size() # Retrieves screen size
+    w, h = img.get_size() # Retrieves img dimensions
+    # Determines ratio of 1920x1080 to current resolution
     if x == 1920:
-        screen.blit(img)
+       ratio = 1
     elif x == 1280:
-        pg.transform.scale(img, ())
+        ratio = 2/3
+    # Uses ratio to resize img appropriately for current resolution
+    img = pg.transform.scale(img, (w*ratio, h*ratio))
+    screen.blit(img, (pos[0]*ratio, pos[1]*ratio))
 
 def set_res(settings):
     res = settings.get('Resolution')
