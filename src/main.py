@@ -8,6 +8,12 @@ def display_bg(name, screen):
     x, y = screen.get_size() # Retrieves screen size
     pg.transform.scale(img, (x, y), screen) # Resizes img to screen size and blits it
 
+def set_res(settings):
+    res = settings.get('Resolution')
+    res = list(map(int, res.split('x')))
+    screen = pg.display.set_mode(res)
+    return screen
+
 def start_menu(screen, clock):
 
     display_bg('start', screen)
@@ -19,12 +25,6 @@ def start_menu(screen, clock):
                 exit()
         pg.display.update()
         clock.tick(120)
-
-def set_res(settings):
-    res = settings.get('Resolution')
-    res = list(map(int, res.split('x')))
-    screen = pg.display.set_mode(res)
-    return screen
 
 def main():
     os.environ['SDL_VIDEO_CENTERED'] = '1' # centers window when not in fullscreen
@@ -44,7 +44,6 @@ def main():
     screen = set_res(settings)    
     
     start_menu(screen, clock)
-
 
 if __name__ == '__main__':
     main()
