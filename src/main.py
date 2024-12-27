@@ -10,7 +10,7 @@ def display_bg(name, screen):
 
 def set_res(settings):
     res = settings.get('Resolution')
-    res = list(map(int, res.split('x')))
+    res = list(map(int, res.split('x'))) # turns string into a list of ints
     screen = pg.display.set_mode(res)
     return screen
 
