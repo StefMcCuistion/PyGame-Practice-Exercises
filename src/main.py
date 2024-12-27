@@ -47,9 +47,9 @@ def start_menu(screen, clock):
 
     X, Y = 1920, 1080
 
-    font = pg.font.SysFont('Cambria', 50)
+    font = pg.font.SysFont('Comic Sans', 50)
 
-    display_bg('start', screen)
+    display_bg('start_old', screen)
     display_spr('ground', screen, (0, Y-138))
 
     header = font.render("Stef's test game", True, 'Black')
