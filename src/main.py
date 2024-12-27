@@ -3,7 +3,14 @@ import os
 import ctypes
 from sys import exit
 
+def display_bg(name, screen):
+    surf = pg.image.load(f'img/bg_{name}.png') # Loads and stores called image
+    x, y = screen.get_size() # Retrieves screen size
+    pg.transform.scale(surf, (x, y), screen) # Resizes img to screen size and blits it
+
 def start_menu(screen, clock):
+
+    display_bg('start', screen)
 
     while True:
         for event in pg.event.get():
