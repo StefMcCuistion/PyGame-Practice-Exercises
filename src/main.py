@@ -3,6 +3,18 @@ import os
 import ctypes
 from sys import exit
 
+def find_ratio(x):
+    """
+    Finds ratio of 1920x1080 to the active resolution. Used in scaling backgrounds, sprites, and fonts. 
+    """
+    if x == 1920:
+       ratio = 1
+    elif x == 1366:
+        ratio = 683/960
+    elif x == 1280:
+        ratio = 2/3
+    return ratio
+
 def display_bg(name, screen):
     img = pg.image.load(f'img/bg_{name}.png') # Loads img
     x, y = screen.get_size() # Retrieves screen size
@@ -13,10 +25,7 @@ def display_spr(name, screen, pos):
     x, y = screen.get_size() # Retrieves screen size
     w, h = img.get_size() # Retrieves img dimensions
     # Determines ratio of 1920x1080 to current resolution
-    if x == 1920:
-       ratio = 1
-    elif x == 1280:
-        ratio = 2/3
+    ratio = find_ratio(x)
     # Uses ratio to resize img appropriately for current resolution
     img = pg.transform.scale(img, (w*ratio, h*ratio))
     screen.blit(img, (pos[0]*ratio, pos[1]*ratio))
@@ -24,10 +33,7 @@ def display_spr(name, screen, pos):
 def display_txt(surf, screen, pos):
     x, y = screen.get_size()
     w, h = surf.get_size()
-    if x == 1920:
-       ratio = 1
-    elif x == 1280:
-        ratio = 2/3
+    ratio = find_ratio(x)
     surf = pg.transform.scale(surf, (w*ratio, h*ratio))
     screen.blit(surf, (pos[0]*ratio, pos[1]*ratio))
 
@@ -46,7 +52,7 @@ def start_menu(screen, clock):
     display_bg('start', screen)
     display_spr('ground', screen, (0, Y-138))
 
-    txt_surf = font.render("Stef's test game", True, 'Black')
+    header = font.render("Stef's test game", True, 'Black')
 
     while True:
         for event in pg.event.get():
@@ -55,7 +61,7 @@ def start_menu(screen, clock):
                 exit()
         display_bg('start', screen)
         display_spr('ground', screen, (0, Y-138))
-        display_txt(txt_surf, screen, (X*.5, Y*.1))
+        display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
         pg.display.update()
         clock.tick(120)
 
