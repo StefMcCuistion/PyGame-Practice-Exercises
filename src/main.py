@@ -11,6 +11,7 @@ def start_menu(screen):
 
 def main():
     pygame.init()
+    pygame.display.set_caption("Stef's Practice Game")
     screen = pygame.display.set_mode((1280, 720))
     
     start_menu(screen)
