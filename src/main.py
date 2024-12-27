@@ -45,6 +45,7 @@ def start_menu(screen, clock):
 
     display_bg('start', screen)
     display_spr('ground', screen, (0, Y-320))
+    display_spr('protag_idle', screen, (X*.1, Y-627-320))
 
     header = font.render("Stef's test game", True, 'Black')
 
@@ -55,6 +56,7 @@ def start_menu(screen, clock):
                 exit()
         display_bg('start', screen)
         display_spr('ground', screen, (0, Y-320))
+        display_spr('protag_idle', screen, (X*.1, Y-860))
         display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
         pg.display.update()
         clock.tick(120)
