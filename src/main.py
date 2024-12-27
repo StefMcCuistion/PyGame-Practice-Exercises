@@ -29,10 +29,10 @@ def set_res(settings):
 
 def start_menu(screen, clock):
 
-    x, y = 1920, 1080
+    X, Y = 1920, 1080
 
     display_bg('start', screen)
-    display_spr('ground', screen, (0, y-138))
+    display_spr('ground', screen, (0, Y-138))
 
     while True:
         for event in pg.event.get():
