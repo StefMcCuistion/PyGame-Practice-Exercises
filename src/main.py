@@ -8,6 +8,14 @@ def display_bg(name, screen):
     x, y = screen.get_size() # Retrieves screen size
     pg.transform.scale(img, (x, y), screen) # Resizes img to screen size and blits it
 
+def display_spr(name, screen):
+    img = pg.image.load(f'img/spr_{name}.png') # Loads img
+    x, y = screen.get_size() # Retrieves screen size
+    if x == 1920:
+        screen.blit(img)
+    elif x == 1280:
+        pg.transform.scale(img, ())
+
 def set_res(settings):
     res = settings.get('Resolution')
     res = list(map(int, res.split('x'))) # turns string into a list of ints
