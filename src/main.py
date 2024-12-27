@@ -50,7 +50,7 @@ def main():
     clock = pg.time.Clock()
     pg.display.set_caption("Stef's Practice Game")
 
-    # Opens settings and creates dictionary
+    # Opens settings.csv and creates dictionary for settings
     settings = {}
     with open('settings.csv') as file:
         for line in file:
