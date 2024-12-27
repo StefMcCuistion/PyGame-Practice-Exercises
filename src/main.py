@@ -41,12 +41,12 @@ def start_menu(screen, clock):
 
     X, Y = 1920, 1080
 
-    font = pg.font.Sysfont('Cambria', 50)
+    font = pg.font.SysFont('Cambria', 50)
 
     display_bg('start', screen)
     display_spr('ground', screen, (0, Y-138))
 
-    txt_surf = font.render("Stef's test game", False, 'White')
+    txt_surf = font.render("Stef's test game", True, 'White')
 
     while True:
         for event in pg.event.get():
