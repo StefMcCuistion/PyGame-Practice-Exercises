@@ -7,12 +7,18 @@ def find_ratio(x):
     """
     Finds ratio of 1920x1080 to the active resolution. Used in scaling backgrounds, sprites, and fonts. 
     """
-    if x == 1920:
-       ratio = 1
+    if x == 5120:
+        ratio = 1
+    elif x == 3840:
+       ratio = 3/4
+    elif x == 2560:
+        ratio = 1/2
+    elif x == 1920:
+        ratio = 3/8
     elif x == 1366:
-        ratio = 683/960
+        ratio = 683/2560
     elif x == 1280:
-        ratio = 2/3
+        ratio == 1/4
     return ratio
 
 def display_bg(name, screen):
@@ -47,10 +53,10 @@ def start_menu(screen, clock):
 
     X, Y = 5120, 2880
 
-    font = pg.font.SysFont('Comic Sans', 50)
+    font = pg.font.SysFont('Comic Sans', 100)
 
     display_bg('start', screen)
-    #display_spr('ground', screen, (0, Y-138))
+    display_spr('ground', screen, (0, Y-321))
 
     header = font.render("Stef's test game", True, 'Black')
 
@@ -60,8 +66,8 @@ def start_menu(screen, clock):
                 pg.quit()
                 exit()
         display_bg('start', screen)
-        #display_spr('ground', screen, (0, Y-138))
-        #display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
+        display_spr('ground', screen, (0, Y-321))
+        display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
         pg.display.update()
         clock.tick(120)
 
