@@ -20,6 +20,12 @@ def start_menu(screen, clock):
         pg.display.update()
         clock.tick(120)
 
+def set_res(settings):
+    res = settings.get('Resolution')
+    res = list(map(int, res.split('x')))
+    screen = pg.display.set_mode(res)
+    return screen
+
 def main():
     os.environ['SDL_VIDEO_CENTERED'] = '1' # centers window when not in fullscreen
     pg.init()
@@ -28,15 +34,14 @@ def main():
     clock = pg.time.Clock()
     pg.display.set_caption("Stef's Practice Game")
 
+    # Opens settings and creates dictionary
     settings = {}
     with open('settings.csv') as file:
         for line in file:
             key, value = line.split(': ')
             settings[key] = value
-    res = settings.get('Resolution')
-    res = list(map(int, res.split('x')))
 
-    screen = pg.display.set_mode(res)
+    screen = set_res(settings)    
     
     start_menu(screen, clock)
 
