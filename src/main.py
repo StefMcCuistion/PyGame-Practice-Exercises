@@ -4,9 +4,9 @@ import ctypes
 from sys import exit
 
 def display_bg(name, screen):
-    surf = pg.image.load(f'img/bg_{name}.png') # Loads and stores called image
+    img = pg.image.load(f'img/bg_{name}.png') # Loads img
     x, y = screen.get_size() # Retrieves screen size
-    pg.transform.scale(surf, (x, y), screen) # Resizes img to screen size and blits it
+    pg.transform.scale(img, (x, y), screen) # Resizes img to screen size and blits it
 
 def start_menu(screen, clock):
 
@@ -27,7 +27,16 @@ def main():
     ctypes.windll.user32.SetProcessDPIAware() # keeps Windows GUI scale settings from messing with resolution
     clock = pg.time.Clock()
     pg.display.set_caption("Stef's Practice Game")
-    screen = pg.display.set_mode((1280, 720))
+
+    settings = {}
+    with open('settings.csv') as file:
+        for line in file:
+            key, value = line.split(': ')
+            settings[key] = value
+    res = settings.get('Resolution')
+    res = list(map(int, res.split('x')))
+
+    screen = pg.display.set_mode(res)
     
     start_menu(screen, clock)
 
