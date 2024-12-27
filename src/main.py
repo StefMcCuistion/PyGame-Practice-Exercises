@@ -16,7 +16,7 @@ def find_ratio(x):
     return ratio
 
 def display_bg(name, screen):
-    img = pg.image.load(f'img/bg_{name}.png') # Loads img
+    img = pg.image.load(f'img/bg_{name}.png').convert_alpha() # Loads img
     x, y = screen.get_size() # Retrieves screen size
     pg.transform.scale(img, (x, y), screen) # Resizes img to screen size and blits it
 
@@ -45,12 +45,12 @@ def set_res(settings):
 
 def start_menu(screen, clock):
 
-    X, Y = 1920, 1080
+    X, Y = 5120, 2880
 
     font = pg.font.SysFont('Comic Sans', 50)
 
-    display_bg('start_old', screen)
-    display_spr('ground', screen, (0, Y-138))
+    display_bg('start', screen)
+    #display_spr('ground', screen, (0, Y-138))
 
     header = font.render("Stef's test game", True, 'Black')
 
@@ -60,8 +60,8 @@ def start_menu(screen, clock):
                 pg.quit()
                 exit()
         display_bg('start', screen)
-        display_spr('ground', screen, (0, Y-138))
-        display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
+        #display_spr('ground', screen, (0, Y-138))
+        #display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
         pg.display.update()
         clock.tick(120)
 
