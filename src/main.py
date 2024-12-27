@@ -16,7 +16,11 @@ def set_res(settings):
 
 def start_menu(screen, clock):
 
+    x, y = screen.get_size() # Retrieves screen size
+
     display_bg('start', screen)
+    surf_ground = pg.image.load('img/spr_ground.png')
+    screen.blit(surf_ground, (0, y+1-138))
 
     while True:
         for event in pg.event.get():
