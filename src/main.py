@@ -46,7 +46,7 @@ def start_menu(screen, clock):
     display_bg('start', screen)
     display_spr('ground', screen, (0, Y-138))
 
-    txt_surf = font.render("Stef's test game", True, 'White')
+    txt_surf = font.render("Stef's test game", True, 'Black')
 
     while True:
         for event in pg.event.get():
