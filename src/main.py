@@ -21,6 +21,16 @@ def display_spr(name, screen, pos):
     img = pg.transform.scale(img, (w*ratio, h*ratio))
     screen.blit(img, (pos[0]*ratio, pos[1]*ratio))
 
+def display_txt(surf, screen, pos):
+    x, y = screen.get_size()
+    w, h = surf.get_size()
+    if x == 1920:
+       ratio = 1
+    elif x == 1280:
+        ratio = 2/3
+    surf = pg.transform.scale(surf, (w*ratio, h*ratio))
+    screen.blit(surf, (pos[0]*ratio, pos[1]*ratio))
+
 def set_res(settings):
     res = settings.get('Resolution')
     res = list(map(int, res.split('x'))) # turns string into a list of ints
@@ -31,14 +41,21 @@ def start_menu(screen, clock):
 
     X, Y = 1920, 1080
 
+    font = pg.font.Sysfont('Cambria', 50)
+
     display_bg('start', screen)
     display_spr('ground', screen, (0, Y-138))
+
+    txt_surf = font.render("Stef's test game", False, 'White')
 
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
                 exit()
+        display_bg('start', screen)
+        display_spr('ground', screen, (0, Y-138))
+        display_txt(txt_surf, screen, (X*.5, Y*.1))
         pg.display.update()
         clock.tick(120)
 
