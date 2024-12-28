@@ -31,6 +31,11 @@ def display_txt(surf, screen, pos):
     surf = pg.transform.scale(surf, (w*ratio, h*ratio))
     screen.blit(surf, (pos[0]*ratio, pos[1]*ratio))
 
+def get_res(settings):
+    res = settings.get("Resolution")
+    res = list(map(int, res.split('x'))) # turns string into a list of ints
+    return res
+
 def set_res(settings):
     res = settings.get('Resolution')
     res = list(map(int, res.split('x'))) # turns string into a list of ints
@@ -44,7 +49,13 @@ def set_res(settings):
 
 def start_menu(screen, settings):
 
-    X, Y = 5120, 2880
+    X, Y = 5120, 2880 # The constant size of the 'canvas', which the image files are already
+                      # sized appropriately for before any scaling is done. Use this like a coordinate
+                      # system since it's constant, then run it thorugh display functions for final
+                      # placement accounting for resolution. 
+    x, y = get_res(settings) # The resolution selected in settings. 
+    w, h = screen.get_size() # The actual resolution, which will differ from that in settings if fullscreen is enabled.
+
     clock = pg.time.Clock()
 
     protag_x = X*.1
@@ -57,12 +68,15 @@ def start_menu(screen, settings):
             if event.type == pg.QUIT:
                 pg.quit()
                 exit()
+        protag_x += 1
+        if protag_x > X:
+            protag_x = -X*.05
         display_bg('start', screen)
         display_spr('ground', screen, (0, Y-320))
         display_spr('protag', screen, (protag_x, Y-860))
         display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
         pg.display.update()
-        clock.tick(200)
+        clock.tick(60)
 
 def main():
     os.environ['SDL_VIDEO_CENTERED'] = '1' # centers window when not in fullscreen
