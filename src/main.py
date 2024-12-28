@@ -3,6 +3,8 @@ import os
 import ctypes
 from sys import exit
 
+
+
 def find_ratio(x):
     """
     Finds ratio of 5120x2880 to the active resolution. Used in scaling backgrounds, sprites, and fonts. 
@@ -76,9 +78,9 @@ def start_menu(screen, settings):
             if event.type == pg.QUIT:
                 pg.quit()
                 exit()
-        protag_x += 1
-        if protag_x > X:
-            protag_x = -X*.05
+        protag_x += w*.01
+        if protag_x > w:
+            protag_x = -w*.4
         screen.blit(bg_start, (0,0))
         screen.blit(ground_surf, ground_pos)
         screen.blit(protag_surf, (protag_pos[0]+protag_x, protag_pos[1]))
