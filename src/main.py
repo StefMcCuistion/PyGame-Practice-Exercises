@@ -10,26 +10,29 @@ def find_ratio(x):
     ratio = x/5120
     return ratio
 
-def display_bg(name, screen):
+def scale_bg(name, screen):
     img = pg.image.load(f'img/bg_{name}.png').convert_alpha() # Loads img
     x, y = screen.get_size() # Retrieves screen size
-    pg.transform.scale(img, (x, y), screen) # Resizes img to screen size and blits it
+    img = pg.transform.scale(img, (x, y)) # Resizes img to screen size
+    return img
 
-def display_spr(name, screen, pos):
+def scale_spr(name, screen, pos):
     img = pg.image.load(f'img/spr_{name}.png') # Loads img
     x, y = screen.get_size() # Retrieves screen size
     w, h = img.get_size() # Retrieves img dimensions
     ratio = find_ratio(x)
     # Uses ratio to resize img appropriately for current resolution
     img = pg.transform.scale(img, (w*ratio, h*ratio))
-    screen.blit(img, (pos[0]*ratio, pos[1]*ratio))
+    surf, pos = img, (pos[0]*ratio, pos[1]*ratio)
+    return surf, pos
 
-def display_txt(surf, screen, pos):
+def scale_txt(surf, screen, pos):
     x, y = screen.get_size()
     w, h = surf.get_size()
     ratio = find_ratio(x)
     surf = pg.transform.scale(surf, (w*ratio, h*ratio))
-    screen.blit(surf, (pos[0]*ratio, pos[1]*ratio))
+    pos = (pos[0]*ratio, pos[1]*ratio)
+    return surf, pos
 
 def get_res(settings):
     res = settings.get("Resolution")
@@ -58,10 +61,15 @@ def start_menu(screen, settings):
 
     clock = pg.time.Clock()
 
-    protag_x = X*.1
-
     font = pg.font.SysFont('Comic Sans', 100)
     header = font.render("Stef's test game", True, 'Black')
+
+    bg_start = scale_bg('start', screen)
+    ground_surf, ground_pos = scale_spr('ground', screen, (0, Y-320))
+    protag_surf, protag_pos = scale_spr('protag', screen, (X*.1, Y-860))
+    txt_surf, txt_pos = scale_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
+
+    protag_x = 0
 
     while True:
         for event in pg.event.get():
@@ -71,10 +79,10 @@ def start_menu(screen, settings):
         protag_x += 1
         if protag_x > X:
             protag_x = -X*.05
-        display_bg('start', screen)
-        display_spr('ground', screen, (0, Y-320))
-        display_spr('protag', screen, (protag_x, Y-860))
-        display_txt(header, screen, (X*.5-(header.get_size()[0]*.5), Y*.02))
+        screen.blit(bg_start, (0,0))
+        screen.blit(ground_surf, ground_pos)
+        screen.blit(protag_surf, (protag_pos[0]+protag_x, protag_pos[1]))
+        screen.blit(txt_surf, txt_pos)
         pg.display.update()
         clock.tick(60)
 
