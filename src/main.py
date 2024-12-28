@@ -66,6 +66,7 @@ def start_menu(screen, settings):
     font = pg.font.SysFont('Comic Sans', 100)
     header = font.render("Stef's test game", True, 'Black')
 
+    # Use X, Y when scaling
     bg_start = scale_bg('start', screen)
     ground_surf, ground_pos = scale_spr('ground', screen, (0, Y-320))
     protag_surf, protag_pos = scale_spr('protag', screen, (X*.1, Y-860))
@@ -78,6 +79,7 @@ def start_menu(screen, settings):
             if event.type == pg.QUIT:
                 pg.quit()
                 exit()
+        # After scaling with X, Y, use w, h for movement
         protag_x += w*.01
         if protag_x > w:
             protag_x = -w*.4
