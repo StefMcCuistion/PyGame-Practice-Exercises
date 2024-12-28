@@ -3,11 +3,6 @@ import os
 import ctypes
 from sys import exit
 
-class Player():
-    def __init__(self, spr, pos):
-        self.spr = spr
-        self.pos = pos
-
 def find_ratio(x):
     """
     Finds ratio of 5120x2880 to the active resolution. Used in scaling backgrounds, sprites, and fonts. 
