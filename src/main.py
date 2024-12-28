@@ -44,9 +44,10 @@ def set_res(settings):
         screen = pg.display.set_mode(res, pg.FULLSCREEN)
     return screen
 
-def start_menu(screen, clock):
+def start_menu(screen, settings):
 
     X, Y = 5120, 2880
+    clock = pg.time.Clock()
 
     protag_x = X*.1
 
@@ -74,7 +75,6 @@ def main():
     pg.init()
     pg.font.init()
     ctypes.windll.user32.SetProcessDPIAware() # keeps Windows GUI scale settings from messing with resolution
-    clock = pg.time.Clock()
     pg.display.set_caption("Stef's Practice Game")
 
     # Opens settings.csv and creates dictionary for settings
@@ -86,7 +86,7 @@ def main():
 
     screen = set_res(settings)
     
-    start_menu(screen, clock)
+    start_menu(screen, settings)
 
 if __name__ == '__main__':
     main()
