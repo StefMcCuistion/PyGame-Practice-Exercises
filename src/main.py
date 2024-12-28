@@ -3,6 +3,11 @@ import os
 import ctypes
 from sys import exit
 
+class Player():
+    def __init__(self, spr, pos):
+        self.spr = spr
+        self.pos = pos
+
 def find_ratio(x):
     """
     Finds ratio of 5120x2880 to the active resolution. Used in scaling backgrounds, sprites, and fonts. 
@@ -34,7 +39,11 @@ def display_txt(surf, screen, pos):
 def set_res(settings):
     res = settings.get('Resolution')
     res = list(map(int, res.split('x'))) # turns string into a list of ints
-    screen = pg.display.set_mode(res)
+    fullscreen = settings.get('Fullscreen')
+    if fullscreen:
+        screen = pg.display.set_mode(res, pg.FULLSCREEN)
+    else: 
+        screen = pg.display.set_mode(res)
     return screen
 
 def start_menu(screen, clock):
@@ -77,7 +86,7 @@ def main():
             key, value = line.split(': ')
             settings[key] = value
 
-    screen = set_res(settings)    
+    screen = set_res(settings)
     
     start_menu(screen, clock)
 
