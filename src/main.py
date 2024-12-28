@@ -8,7 +8,6 @@ def find_ratio(x):
     Finds ratio of 5120x2880 to the active resolution. Used in scaling backgrounds, sprites, and fonts. 
     """
     ratio = x/5120
-    print(f"ratio = {ratio}") # debug
     return ratio
 
 def display_bg(name, screen):
@@ -33,7 +32,6 @@ def display_txt(surf, screen, pos):
     screen.blit(surf, (pos[0]*ratio, pos[1]*ratio))
 
 def set_res(settings):
-    print(f'settings = {settings}') # debug
     res = settings.get('Resolution')
     res = list(map(int, res.split('x'))) # turns string into a list of ints
     fullscreen = settings.get('Fullscreen')
