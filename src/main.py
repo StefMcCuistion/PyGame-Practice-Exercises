@@ -33,13 +33,15 @@ def display_txt(surf, screen, pos):
     screen.blit(surf, (pos[0]*ratio, pos[1]*ratio))
 
 def set_res(settings):
+    print(f'settings = {settings}') # debug
     res = settings.get('Resolution')
     res = list(map(int, res.split('x'))) # turns string into a list of ints
     fullscreen = settings.get('Fullscreen')
-    if fullscreen:
-        screen = pg.display.set_mode(res, pg.FULLSCREEN)
-    else: 
+    print(f'fullscreen = {fullscreen}')
+    if fullscreen == "0":
         screen = pg.display.set_mode(res)
+    else: 
+        screen = pg.display.set_mode(res, pg.FULLSCREEN)
     return screen
 
 def start_menu(screen, clock):
