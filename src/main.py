@@ -62,7 +62,7 @@ class StefsGame:
             2880,
         )  # The constant size of the 'canvas', which the image files are already
         # sized appropriately for before any scaling is done. Use this like a coordinate
-        # system since it's constant, then run it thorugh display functions for final
+        # system since it's constant, then run it thorugh scale functions for final
         # placement accounting for resolution.
         x, y = self.get_res(settings)  # The resolution selected in settings.
         w, h = (
