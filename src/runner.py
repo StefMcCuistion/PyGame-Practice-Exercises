@@ -32,7 +32,6 @@ def main():
         screen.blit(ground_surf, (0, 300))
         screen.blit(txt_surf, (300, 50))
         screen.blit(snail_surf, snail_rect)
-        player_rect.left += 4
         screen.blit(player_surf, player_rect)
         snail_rect.left -= 4
         if snail_rect.left < -snail_rect.width:
