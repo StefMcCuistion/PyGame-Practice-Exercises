@@ -13,11 +13,11 @@ def main():
     clock = pg.time.Clock()
     font = pg.font.Font('runner/font/pixeltype.ttf', 50)
 
-    bg_surf = pg.image.load('runner/graphics/sky.png')
-    ground_surf = pg.image.load('runner/graphics/ground.png')
-    txt_surf = font.render("Stef's Game", False, 'Black')
+    bg_surf = pg.image.load('runner/graphics/sky.png').convert()
+    ground_surf = pg.image.load('runner/graphics/ground.png').convert()
+    txt_surf = font.render("Stef's Game", False, 'Black').convert()
 
-    snail_surf = pg.image.load('runner/graphics/snail/snail1.png')
+    snail_surf = pg.image.load('runner/graphics/snail/snail1.png').convert_alpha()
     snail_x = 600
 
     while True:
