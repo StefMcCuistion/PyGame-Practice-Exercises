@@ -47,7 +47,10 @@ def main():
         player_rect.y += gravity
         if player_rect.bottom >= 300:
             player_rect.bottom = 300
-        player_rect.colliderect(snail_rect)
+
+        if player_rect.colliderect(snail_rect):
+            pg.quit()
+            exit()
 
         pg.display.update()
         clock.tick(60)
