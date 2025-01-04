@@ -15,13 +15,13 @@ class StefsGame:
         return ratio
 
     def scale_bg(self, name, screen):
-        img = pg.image.load(f"resolution_experiment/img/bg_{name}.png").convert_alpha()  # Loads img
+        img = pg.image.load(f"img/bg_{name}.png").convert_alpha()  # Loads img
         x, y = screen.get_size()  # Retrieves screen size
         img = pg.transform.scale(img, (x, y))  # Resizes img to screen size
         return img
 
     def scale_spr(self, name, screen, pos):
-        img = pg.image.load(f"resolution_experiment/img/spr_{name}.png")  # Loads img
+        img = pg.image.load(f"img/spr_{name}.png")  # Loads img
         x, y = screen.get_size()  # Retrieves screen size
         w, h = img.get_size()  # Retrieves img dimensions
         ratio = self.find_ratio(x)
@@ -149,7 +149,7 @@ class StefsGame:
 
         self.clock = pg.time.Clock()
         self.screen = self.set_res(settings)
-        console_config = self.get_console_config_json("resolution_experiment/console_config01.json")
+        console_config = self.get_console_config_json("console_config01.json")
         self.console = Console(self, self.screen.get_width(), console_config)
 
         self.start_menu(settings)

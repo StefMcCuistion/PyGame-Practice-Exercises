@@ -1,7 +1,20 @@
 import pygame as pg
+from random import randint
 from sys import exit
 
+
 def main():
+
+    def obstacle_movement(list):
+        if list:
+            for rect in list:
+                rect.x -= 5
+                screen.blit(snail_surf, rect)
+            list = [obstacle for obstacle in list if obstacle.x > -100]
+                
+            return list
+        else: 
+            return []
 
     def display_score():
         score = int((pg.time.get_ticks() - start_time)/100)
@@ -22,26 +35,35 @@ def main():
     screen = pg.display.set_mode((800, 400))
     pg.display.set_caption('Runner')
     clock = pg.time.Clock()
-    font = pg.font.Font('runner/font/pixeltype.ttf', 50)
+    font = pg.font.Font('font/pixeltype.ttf', 50)
+
 
     game_active = False
     start_time = 0
 
-    bg_surf = pg.image.load('runner/graphics/sky.png').convert()
-    ground_surf = pg.image.load('runner/graphics/ground.png').convert()
+    # Environment
+    bg_surf = pg.image.load('graphics/sky.png').convert()
+    ground_surf = pg.image.load('graphics/ground.png').convert()
 
-    snail_surf = pg.image.load('runner/graphics/snail/snail1.png').convert_alpha()
-    snail_rect = snail_surf.get_rect(midbottom = (700, 300))
+    # Obstacles
+    snail_surf = pg.image.load('graphics/snail/snail1.png').convert_alpha()
+    snail_rect = snail_surf.get_rect(midbottom = (randint(900, 1100), 300))
 
-    player_surf = pg.image.load('runner/graphics/player/player_walk_1.png').convert_alpha()
+    obstacle_rect_list = []
+
+    # Player
+    player_surf = pg.image.load('graphics/player/player_walk_1.png').convert_alpha()
     player_rect = player_surf.get_rect(midbottom = (80, 300))
-    player_stand = pg.image.load('runner/graphics/player/player_stand.png').convert_alpha()
+    player_stand = pg.image.load('graphics/player/player_stand.png').convert_alpha()
     player_stand = pg.transform.scale_by(player_stand, 3)
     player_stand_rect = player_stand.get_rect(center = (400, 200))
     player_stand_rect.y += 10
 
     score = 0
     gravity = 0
+
+    obstacle_timer = pg.USEREVENT + 1
+    pg.time.set_timer(obstacle_timer, 1400)
 
     while True:
         for event in pg.event.get():
@@ -54,33 +76,39 @@ def main():
                         gravity = -18
                 else:
                     game_active = True
-                    snail_rect.left = screen.get_width()   
-                    start_time = pg.time.get_ticks()   
+                    start_time = pg.time.get_ticks()  
+            if event.type == obstacle_timer and game_active:
+                obstacle_rect_list.append(snail_rect)
         if game_active:
             screen.blit(bg_surf)
             screen.blit(ground_surf, (0, 300))
             score = display_score()
             
-            screen.blit(snail_surf, snail_rect)
-
-            snail_rect.left -= 4
-            if snail_rect.right < 0:
-                snail_rect.left = screen.get_width()
-
             gravity += .8
             screen.blit(player_surf, player_rect)
             player_rect.y += gravity
             if player_rect.bottom >= 300:
                 player_rect.bottom = 300
 
+            #Obstacle movement
+            obstacle_rect_list = obstacle_movement(obstacle_rect_list)
+            if obstacle_rect_list:
+                print(obstacle_rect_list)
             if player_rect.colliderect(snail_rect):
                 game_active = False
+
+
         else:
             screen.fill((94, 129, 162))
             screen.blit(player_stand, player_stand_rect)
-            score_surf = font.render(f"Your score was {score}!", False, (64, 64, 64))            
-            score_rect = score_surf.get_rect(center = (400, 370))
-            screen.blit(score_surf, score_rect)
+            if score == 0:
+                message_surf = font.render('Press SPACE to start!', False, (64, 64, 64))
+                message_rect = message_surf.get_rect(center = (400, 370))
+                screen.blit(message_surf, message_rect)
+            else:
+                score_surf = font.render(f"Your score was {score}!", False, (64, 64, 64))            
+                score_rect = score_surf.get_rect(center = (400, 370))
+                screen.blit(score_surf, score_rect)
             display_title()
 
 
