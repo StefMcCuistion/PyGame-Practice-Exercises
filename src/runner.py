@@ -45,6 +45,8 @@ def main():
         gravity += 1
         screen.blit(player_surf, player_rect)
         player_rect.y += gravity
+        if player_rect.bottom >= 300:
+            player_rect.bottom = 300
         player_rect.colliderect(snail_rect)
 
         pg.display.update()
