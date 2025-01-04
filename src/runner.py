@@ -4,23 +4,19 @@ from sys import exit
 def main():
 
     def display_score():
-        current_time = int((pg.time.get_ticks() - start_time)/100)
-        score_surf = font.render(f'SCORE: {current_time}', False, (64, 64, 64))
+        score = int((pg.time.get_ticks() - start_time)/100)
+        score_surf = font.render(f'SCORE: {score}', False, (64, 64, 64))
         score_rect = score_surf.get_rect(center = (400, 50))
         score_backdrop_rect = score_rect.inflate(10, 10)
         pg.draw.rect(screen, '#c0e8ec', score_backdrop_rect, False, 5)
         screen.blit(score_surf, score_rect)
+        return score
 
     def display_title():
         title_surf = font.render("STEF'S GAME", False, 'black')
         title_surf = pg.transform.scale_by(title_surf, 2)
         title_rect = title_surf.get_rect(center = (400, 50))
         screen.blit(title_surf, title_rect)
-
-    def display_instructions():
-        instructions_surf = font.render("Press SPACE to START GAME or to JUMP", False, (64, 64, 64))
-        instructions_rect = instructions_surf.get_rect(center = (400, 370))
-        screen.blit(instructions_surf, instructions_rect)
 
     pg.init()
     screen = pg.display.set_mode((800, 400))
@@ -42,7 +38,9 @@ def main():
     player_stand = pg.image.load('runner/graphics/player/player_stand.png').convert_alpha()
     player_stand = pg.transform.scale_by(player_stand, 3)
     player_stand_rect = player_stand.get_rect(center = (400, 200))
+    player_stand_rect.y += 10
 
+    score = 0
     gravity = 0
 
     while True:
@@ -61,8 +59,8 @@ def main():
         if game_active:
             screen.blit(bg_surf)
             screen.blit(ground_surf, (0, 300))
-            display_score()
-
+            score = display_score()
+            
             screen.blit(snail_surf, snail_rect)
 
             snail_rect.left -= 4
@@ -80,7 +78,9 @@ def main():
         else:
             screen.fill((94, 129, 162))
             screen.blit(player_stand, player_stand_rect)
-            display_instructions()
+            score_surf = font.render(f"Your score was {score}!", False, (64, 64, 64))            
+            score_rect = score_surf.get_rect(center = (400, 370))
+            screen.blit(score_surf, score_rect)
             display_title()
 
 
