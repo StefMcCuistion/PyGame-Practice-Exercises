@@ -8,6 +8,8 @@ def main():
     clock = pg.time.Clock()
     font = pg.font.Font('runner/font/pixeltype.ttf', 50)
 
+    game_active = True
+
     bg_surf = pg.image.load('runner/graphics/sky.png').convert()
     ground_surf = pg.image.load('runner/graphics/ground.png').convert()
 
@@ -29,28 +31,35 @@ def main():
                 pg.quit()
                 exit()
             if event.type == pg.KEYDOWN:
-                if event.key == pg.K_SPACE and player_rect.bottom == 300:
-                    gravity = -20
-        screen.blit(bg_surf)
-        screen.blit(ground_surf, (0, 300))
-        pg.draw.rect(screen, '#c0e8ec', txt_backdrop_rect, False, 5)
-        screen.blit(txt_surf, txt_rect)
+                if game_active:
+                    if event.key == pg.K_SPACE and player_rect.bottom == 300:
+                        gravity = -20
+                else:
+                    game_active = True
+                    snail_rect.left = screen.get_width()      
+        if game_active:
+            screen.blit(bg_surf)
+            screen.blit(ground_surf, (0, 300))
+            pg.draw.rect(screen, '#c0e8ec', txt_backdrop_rect, False, 5)
+            screen.blit(txt_surf, txt_rect)
 
-        screen.blit(snail_surf, snail_rect)
+            screen.blit(snail_surf, snail_rect)
 
-        snail_rect.left -= 4
-        if snail_rect.right < 0:
-            snail_rect.left = screen.get_width()
+            snail_rect.left -= 4
+            if snail_rect.right < 0:
+                snail_rect.left = screen.get_width()
 
-        gravity += 1
-        screen.blit(player_surf, player_rect)
-        player_rect.y += gravity
-        if player_rect.bottom >= 300:
-            player_rect.bottom = 300
+            gravity += 1
+            screen.blit(player_surf, player_rect)
+            player_rect.y += gravity
+            if player_rect.bottom >= 300:
+                player_rect.bottom = 300
 
-        if player_rect.colliderect(snail_rect):
-            pg.quit()
-            exit()
+            if player_rect.colliderect(snail_rect):
+                game_active = False
+        else:
+            screen.fill('gray')
+
 
         pg.display.update()
         clock.tick(60)
