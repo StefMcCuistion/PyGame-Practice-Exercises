@@ -29,7 +29,7 @@ def main():
                 pg.quit()
                 exit()
             if event.type == pg.KEYDOWN:
-                if event.key == pg.K_SPACE:
+                if event.key == pg.K_SPACE and player_rect.bottom == 300:
                     gravity = -20
         screen.blit(bg_surf)
         screen.blit(ground_surf, (0, 300))
