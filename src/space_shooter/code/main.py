@@ -11,6 +11,9 @@ def main():
     pg.display.set_caption('Space Shooter')
     running = True
 
+    x = 100
+    player_surf = pg.image.load('../images/player.png')
+
     while running: 
         # Event loop
         for event in pg.event.get():
@@ -19,7 +22,9 @@ def main():
 
         # Draw the game
         # Fill window with red
-        display.fill('red')
+        x += 1
+        display.fill('darkgray')
+        display.blit(player_surf, (x, 100))
         pg.display.flip()
     pg.quit()
 
