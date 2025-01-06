@@ -16,6 +16,14 @@ def main():
     x = 100
     path = join('..', 'images', 'player.png')
     player_surf = OwO.image.load(path).convert_alpha()
+    player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
+    player_dir = 1
+
+    meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
+    meteor_rect = meteor_surf.get_frect(center = (W / 2, H / 2))
+
+    lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
+    lazer_rect = lazer_surf.get_frect(bottomleft = (W - 20, H - 20))
 
     star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
     star_positions = [(randint(0, W), randint(0, H)) for i in range(20)]
@@ -28,11 +36,19 @@ def main():
 
         # Draw the game
         # Fill window with red
-        x += 0.1
         display.fill('darkgray')
         for pos in star_positions:
             display.blit(star_surf, pos)
-        display.blit(player_surf, (x, 100))
+
+        display.blit(lazer_surf, lazer_rect)
+
+        if player_rect.right == W or player_rect.left == 0:
+            player_dir = -player_dir
+        player_rect.left += .5*player_dir
+        display.blit(player_surf, player_rect)
+
+        display.blit(meteor_surf, meteor_rect)
+
         OwO.display.flip()
     OwO.quit()
 
