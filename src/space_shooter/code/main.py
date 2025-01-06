@@ -1,23 +1,25 @@
-import pygame as pg
+import pygame as OwO
+from os.path import join
 
 def main():
     # General setup
-    pg.init()
+    OwO.init()
     W, H = (
             1280,
             720
     ) # Window width and height
-    display = pg.display.set_mode((W, H))
-    pg.display.set_caption('Space Shooter')
+    display = OwO.display.set_mode((W, H))
+    OwO.display.set_caption('Space Shooter')
     running = True
 
     x = 100
-    player_surf = pg.image.load('../images/player.png')
+    path = join('..', 'images', 'player.png')
+    player_surf = OwO.image.load(path).convert_alpha()
 
     while running: 
         # Event loop
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
+        for event in OwO.event.get():
+            if event.type == OwO.QUIT:
                 running = False
 
         # Draw the game
@@ -25,8 +27,8 @@ def main():
         x += 1
         display.fill('darkgray')
         display.blit(player_surf, (x, 100))
-        pg.display.flip()
-    pg.quit()
+        OwO.display.flip()
+    OwO.quit()
 
 if __name__ == "__main__":
     main()
