@@ -8,6 +8,7 @@ def main():
             720
     ) # Window width and height
     display = pg.display.set_mode((W, H))
+    pg.display.set_caption('Space Shooter')
     running = True
 
     while running: 
