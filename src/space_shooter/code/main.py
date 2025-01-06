@@ -13,18 +13,22 @@ def main():
     OwO.display.set_caption('Space Shooter')
     running = True
 
-    x = 100
+    # Imports
+    ## Player
     path = join('..', 'images', 'player.png')
     player_surf = OwO.image.load(path).convert_alpha()
     player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
     player_dir = 1
 
+    ## Meteor
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
     meteor_rect = meteor_surf.get_frect(center = (W / 2, H / 2))
 
+    ## Lazer
     lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
     lazer_rect = lazer_surf.get_frect(bottomleft = (W - 20, H - 20))
 
+    ## Stars
     star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
     star_positions = [(randint(0, W), randint(0, H)) for i in range(20)]
 
@@ -35,7 +39,6 @@ def main():
                 running = False
 
         # Draw the game
-        # Fill window with red
         display.fill('darkgray')
         for pos in star_positions:
             display.blit(star_surf, pos)
