@@ -5,13 +5,27 @@ from random import randint
 W, H = (
         1280,
         720
-) # Window width and height
+)       # Window width and height
 
 class Player(OwO.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
         self.image = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
         self.rect = self.image.get_frect(center = (W / 2, H / 2))
+        self.dir = OwO.math.Vector2()
+        self.speed = 300
+
+    def update(self, dt):
+        keys = OwO.key.get_pressed()
+        recent_keys = OwO.key.get_just_pressed()
+
+        self.dir.x = int(keys[OwO.K_RIGHT]) - int(keys[OwO.K_LEFT])
+        self.dir.y = int(keys[OwO.K_DOWN]) - int(keys[OwO.K_UP])
+        self.dir = self.dir.normalize() if self.dir else self.dir
+        self.rect.center += self.dir * self.speed * dt
+
+        if recent_keys[OwO.K_SPACE]:
+            print('Fire lazer')
 
 def main():
     # General setup
@@ -28,8 +42,6 @@ def main():
     # player_surf = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
     # player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
     player = Player(all_sprites)
-    player_dir = OwO.math.Vector2()
-    player_speed = 300
 
     ## Meteor
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
@@ -51,15 +63,6 @@ def main():
                 running = False
 
 
-        # Input
-        OwO.key.set_repeat()
-
-        keys = OwO.key.get_pressed()
-        player_dir.x = int(keys[OwO.K_RIGHT]) - int(keys[OwO.K_LEFT])
-        player_dir.y = int(keys[OwO.K_DOWN]) - int(keys[OwO.K_UP])
-        player_dir = player_dir.normalize() if player_dir else player_dir
-        # player_rect.center += player_dir * player_speed * dt
-
         # recent_keys = OwO.key.get_just_pressed()
         # if recent_keys[OwO.K_SPACE]:
         #     print('Fire lazer')
@@ -67,25 +70,14 @@ def main():
 
         # Draw the game
 
-        all_sprites.update()
+        all_sprites.update(dt)
 
         display.fill('darkgray')
         for pos in star_positions:
             display.blit(star_surf, pos)
-
         display.blit(meteor_surf, meteor_rect)
-
         display.blit(lazer_surf, lazer_rect)
-        ## Player movement
-        # player_rect.center += player_dir * player_speed * dt
-        # if player_rect.top <= 0:
-        #     player_dir.y *= -1
-        # if player_rect.bottom >= H:
-        #     player_dir.y *= -1
-        # if player_rect.left <= 0:
-        #     player_dir.x *= -1
-        # if player_rect.right >= W:
-        #     player_dir.x *= -1
+
         all_sprites.draw(display)
 
         OwO.display.flip()
