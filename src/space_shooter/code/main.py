@@ -1,6 +1,6 @@
 import pygame as OwO
 from os.path import join
-from random import randint
+from random import randint, uniform
 
 def main():
     class Player(OwO.sprite.Sprite):
@@ -60,12 +60,12 @@ def main():
             self.image = surf
             self.rect = self.image.get_frect(center = pos)
             self.creation_time = OwO.time.get_ticks()
-            self.lifespan = 2000
+            self.lifespan = 3500
+            self.dir = OwO.math.Vector2(uniform(-0.5, 0.5), 1)
+            self.speed = randint(400, 500)
 
         def update(self, dt):
-            self.rect.y += 20 * dt
-
-        def destruction_timer(self):
+            self.rect.center += self.dir * self.speed * dt
             current_time = OwO.time.get_ticks()
             if self.lifespan < current_time - self.creation_time:
                 self.kill()
@@ -109,7 +109,8 @@ def main():
             if event.type == OwO.QUIT:
                 running = False
             if event.type == meteor_event:
-                Meteor(meteor_surf, (W / 2, H / 2), all_sprites)
+                x, y = randint(0, W), randint(-200, -100)
+                Meteor(meteor_surf, (x, y), all_sprites)
 
         # Draw the game
 
