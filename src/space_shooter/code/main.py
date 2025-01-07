@@ -109,14 +109,13 @@ def main():
                 x, y = randint(0, W), randint(-200, -100)
                 Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
 
-        # Draw the game
+        # Update
         all_sprites.update(dt)
+        print(OwO.sprite.spritecollide(player, meteor_sprites, False))
+
+        # Draw the game
         display.fill('darkgray')
         all_sprites.draw(display)
-
-        # Detect collision
-        print(player.rect.collidepoint((100, 200)))
-
         OwO.display.flip()
     OwO.quit()
 
