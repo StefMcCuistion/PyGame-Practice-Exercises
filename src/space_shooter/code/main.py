@@ -37,10 +37,6 @@ def main():
 
     all_sprites = OwO.sprite.Group()
 
-    # Imports
-    ## Player
-    # player_surf = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
-    # player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
     player = Player(all_sprites)
 
     ## Meteor
@@ -61,12 +57,6 @@ def main():
         for event in OwO.event.get():
             if event.type == OwO.QUIT:
                 running = False
-
-
-        # recent_keys = OwO.key.get_just_pressed()
-        # if recent_keys[OwO.K_SPACE]:
-        #     print('Fire lazer')
-            
 
         # Draw the game
 
