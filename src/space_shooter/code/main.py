@@ -50,6 +50,9 @@ def main():
             self.image = surf
             self.rect = self.image.get_frect(midbottom = pos)
 
+        def update(self, dt):
+            self.rect.centery -= 400 * dt
+
     # General setup
     W, H = (
             1280,
