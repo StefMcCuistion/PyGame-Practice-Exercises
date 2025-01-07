@@ -2,13 +2,20 @@ import pygame as OwO
 from os.path import join
 from random import randint
 
+W, H = (
+        1280,
+        720
+) # Window width and height
+
+class Player(OwO.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
+        self.rect = self.image.get_frect(center = (W / 2, H / 2))
+
 def main():
     # General setup
     OwO.init()
-    W, H = (
-            1280,
-            720
-    ) # Window width and height
     display = OwO.display.set_mode((W, H))
     OwO.display.set_caption('Space Shooter')
     clock = OwO.time.Clock()
@@ -16,9 +23,8 @@ def main():
 
     # Imports
     ## Player
-    path = join('..', 'images', 'player.png')
-    player_surf = OwO.image.load(path).convert_alpha()
-    player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
+    # player_surf = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
+    # player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
     player_dir = OwO.math.Vector2()
     player_speed = 300
 
@@ -43,11 +49,18 @@ def main():
 
 
         # Input
+        OwO.key.set_repeat()
+
         keys = OwO.key.get_pressed()
+        recent_keys = OwO.key.get_just_pressed()
         player_dir.x = int(keys[OwO.K_RIGHT]) - int(keys[OwO.K_LEFT])
         player_dir.y = int(keys[OwO.K_DOWN]) - int(keys[OwO.K_UP])
         player_dir = player_dir.normalize() if player_dir else player_dir
         player_rect.center += player_dir * player_speed * dt
+
+        if recent_keys[OwO.K_SPACE]:
+            print('Fire lazer')
+            
 
         # Draw the game
         display.fill('darkgray')
