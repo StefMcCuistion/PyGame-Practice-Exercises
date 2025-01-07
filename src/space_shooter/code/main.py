@@ -15,6 +15,17 @@ class Player(OwO.sprite.Sprite):
         self.dir = OwO.math.Vector2()
         self.speed = 300
 
+        # Cooldown
+        self.can_shoot = True
+        self.lazer_shoot_time = 0
+        self.cooldown_duration = 400
+
+    def lazer_timer(self):
+        if not self.can_shoot:
+            current_time = OwO.time.get_ticks()
+            if current_time - self.laser_shoot_time >= self.cooldown_duration:
+                self.can_shoot = True
+
     def update(self, dt):
         keys = OwO.key.get_pressed()
         recent_keys = OwO.key.get_just_pressed()
@@ -24,8 +35,12 @@ class Player(OwO.sprite.Sprite):
         self.dir = self.dir.normalize() if self.dir else self.dir
         self.rect.center += self.dir * self.speed * dt
 
-        if recent_keys[OwO.K_SPACE]:
+        if recent_keys[OwO.K_SPACE] and self.can_shoot:
             print('Fire lazer')
+            self.can_shoot = False
+            self.laser_shoot_time = OwO.time.get_ticks()
+
+        self.lazer_timer()
 
 class Star(OwO.sprite.Sprite):
     def __init__(self, groups, surf):
