@@ -113,6 +113,8 @@ def main():
         # Update
         all_sprites.update(dt)
         collision_sprites = OwO.sprite.spritecollide(player, meteor_sprites, False)
+        for lazer in lazer_sprites:
+            OwO.sprite.spritecollide(lazer, meteor_sprites, True)
 
         # Draw the game
         display.fill('darkgray')
