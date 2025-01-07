@@ -54,6 +54,24 @@ def main():
             self.rect.centery -= 400 * dt
             if self.rect.bottom < 0: self.kill()
 
+    class Meteor(OwO.sprite.Sprite):
+        def __init__(self, surf, pos, groups):
+            super().__init__(groups)
+            self.image = surf
+            self.rect = self.image.get_frect(center = pos)
+            self.creation_time = OwO.time.get_ticks()
+            self.lifespan = 2000
+
+        def update(self, dt):
+            self.rect.y += 20 * dt
+
+        def destruction_timer(self):
+            current_time = OwO.time.get_ticks()
+            if self.lifespan < current_time - self.creation_time:
+                self.kill()
+
+            
+
     # General setup
     W, H = (
             1280,
@@ -76,11 +94,9 @@ def main():
 
     ## Meteor
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
-    meteor_rect = meteor_surf.get_frect(center = (W / 2, H / 2))
 
     ## Lazer
     lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
-    lazer_rect = lazer_surf.get_frect(bottomleft = (20, H - 20))
 
     # Custom events -> Meteor event
     meteor_event = OwO.event.custom_type()
@@ -93,14 +109,13 @@ def main():
             if event.type == OwO.QUIT:
                 running = False
             if event.type == meteor_event:
-                print('create meteor')
+                Meteor(meteor_surf, (W / 2, H / 2), all_sprites)
 
         # Draw the game
 
         all_sprites.update(dt)
 
         display.fill('darkgray')
-        display.blit(meteor_surf, meteor_rect)
 
         all_sprites.draw(display)
 
