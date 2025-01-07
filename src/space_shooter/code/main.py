@@ -8,8 +8,8 @@ W, H = (
 ) # Window width and height
 
 class Player(OwO.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, groups):
+        super().__init__(groups)
         self.image = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
         self.rect = self.image.get_frect(center = (W / 2, H / 2))
 
@@ -21,11 +21,13 @@ def main():
     clock = OwO.time.Clock()
     running = True
 
+    all_sprites = OwO.sprite.Group()
+
     # Imports
     ## Player
     # player_surf = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
     # player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
-    player = Player()
+    player = Player(all_sprites)
     player_dir = OwO.math.Vector2()
     player_speed = 300
 
@@ -53,17 +55,20 @@ def main():
         OwO.key.set_repeat()
 
         keys = OwO.key.get_pressed()
-        recent_keys = OwO.key.get_just_pressed()
         player_dir.x = int(keys[OwO.K_RIGHT]) - int(keys[OwO.K_LEFT])
         player_dir.y = int(keys[OwO.K_DOWN]) - int(keys[OwO.K_UP])
         player_dir = player_dir.normalize() if player_dir else player_dir
         # player_rect.center += player_dir * player_speed * dt
 
-        if recent_keys[OwO.K_SPACE]:
-            print('Fire lazer')
+        # recent_keys = OwO.key.get_just_pressed()
+        # if recent_keys[OwO.K_SPACE]:
+        #     print('Fire lazer')
             
 
         # Draw the game
+
+        all_sprites.update()
+
         display.fill('darkgray')
         for pos in star_positions:
             display.blit(star_surf, pos)
@@ -81,7 +86,7 @@ def main():
         #     player_dir.x *= -1
         # if player_rect.right >= W:
         #     player_dir.x *= -1
-        display.blit(player.image, player.rect)
+        all_sprites.draw(display)
 
         OwO.display.flip()
     OwO.quit()
