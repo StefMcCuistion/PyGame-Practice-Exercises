@@ -70,7 +70,18 @@ def main():
             if self.lifespan < current_time - self.creation_time:
                 self.kill()
 
-            
+    def collision():
+        global running
+
+        collision_sprites = OwO.sprite.spritecollide(player, meteor_sprites, False)
+        if collision_sprites: 
+            running = False
+            print('collision')
+        for lazer in lazer_sprites:
+            collided_sprites = OwO.sprite.spritecollide(lazer, meteor_sprites, True)
+            if collided_sprites:
+                lazer.kill()
+
 
     # General setup
     W, H = (
@@ -81,12 +92,15 @@ def main():
     display = OwO.display.set_mode((W, H))
     OwO.display.set_caption('Space Shooter')
     clock = OwO.time.Clock()
+    global running
     running = True
 
     # Imports
     star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
     lazer_surf = OwO.image.load(join('..', 'images', 'lazer.png')).convert_alpha()
+    font = OwO.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 20)
+    txt_surf = font.render('text', True, 'red')
 
     # Sprites
     all_sprites = OwO.sprite.Group()
@@ -101,7 +115,7 @@ def main():
     OwO.time.set_timer(meteor_event, 500)
 
     while running:
-        dt = clock.tick(120) / 1000
+        dt = clock.tick() / 1000
         # Event loop
         for event in OwO.event.get():
             if event.type == OwO.QUIT:
@@ -112,15 +126,12 @@ def main():
 
         # Update
         all_sprites.update(dt)
-        collision_sprites = OwO.sprite.spritecollide(player, meteor_sprites, False)
-        for lazer in lazer_sprites:
-            collided_sprites = OwO.sprite.spritecollide(lazer, meteor_sprites, True)
-            if collided_sprites:
-                lazer.kill()
+        collision()
 
         # Draw the game
         display.fill('darkgray')
         all_sprites.draw(display)
+        display.blit(txt_surf, (0, 0))
         OwO.display.flip()
     OwO.quit()
 
