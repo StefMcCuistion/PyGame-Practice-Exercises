@@ -32,7 +32,7 @@ def main():
             self.rect.center += self.dir * self.speed * dt
 
             if recent_keys[OwO.K_SPACE] and self.can_shoot:
-                Lazer(lazer_surf, self.rect.midtop, all_sprites)
+                Lazer(lazer_surf, self.rect.midtop, (all_sprites, lazer_sprites))
                 self.can_shoot = False
                 self.laser_shoot_time = OwO.time.get_ticks()
 
@@ -86,11 +86,12 @@ def main():
     # Imports
     star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
-    lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
+    lazer_surf = OwO.image.load(join('..', 'images', 'lazer.png')).convert_alpha()
 
     # Sprites
     all_sprites = OwO.sprite.Group()
     meteor_sprites = OwO.sprite.Group()
+    lazer_sprites = OwO.sprite.Group()
     for i in range(20): 
         Star(all_sprites, star_surf)
     player = Player(all_sprites)
@@ -111,7 +112,7 @@ def main():
 
         # Update
         all_sprites.update(dt)
-        print(OwO.sprite.spritecollide(player, meteor_sprites, False))
+        collision_sprites = OwO.sprite.spritecollide(player, meteor_sprites, False)
 
         # Draw the game
         display.fill('darkgray')
