@@ -2,10 +2,7 @@ import pygame as OwO
 from os.path import join
 from random import randint
 
-W, H = (
-        1280,
-        720
-)       # Window width and height
+
 
 class Player(OwO.sprite.Sprite):
     def __init__(self, groups):
@@ -36,7 +33,7 @@ class Player(OwO.sprite.Sprite):
         self.rect.center += self.dir * self.speed * dt
 
         if recent_keys[OwO.K_SPACE] and self.can_shoot:
-            print('Fire lazer')
+            Lazer(lazer_surf, self.rect.midtop, all_sprites)
             self.can_shoot = False
             self.laser_shoot_time = OwO.time.get_ticks()
 
@@ -48,56 +45,62 @@ class Star(OwO.sprite.Sprite):
         self.image = surf
         self.rect = self.image.get_frect(center = (randint(0, W), randint(0, H)))
 
-def main():
-    # General setup
-    OwO.init()
-    display = OwO.display.set_mode((W, H))
-    OwO.display.set_caption('Space Shooter')
-    clock = OwO.time.Clock()
-    running = True
+class Lazer(OwO.sprite.Sprite):
+    def __init__(self, surf, pos, groups):
+        super().__init__(groups)
+        self.image = surf
+        self.rect = self.image.get_frect(midbottom = pos)
 
-    all_sprites = OwO.sprite.Group()
+# General setup
+W, H = (
+        1280,
+        720
+)       # Window width and height
+OwO.init()
+all_sprites = OwO.sprite.Group()
+display = OwO.display.set_mode((W, H))
+OwO.display.set_caption('Space Shooter')
+clock = OwO.time.Clock()
+running = True
 
-    star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
-    for i in range(20): 
-        Star(all_sprites, star_surf)
-    player = Player(all_sprites)
 
-    
+star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
+for i in range(20): 
+    Star(all_sprites, star_surf)
+player = Player(all_sprites)
 
-    ## Meteor
-    meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
-    meteor_rect = meteor_surf.get_frect(center = (W / 2, H / 2))
 
-    ## Lazer
-    lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
-    lazer_rect = lazer_surf.get_frect(bottomleft = (20, H - 20))
 
-    # Custom events -> Meteor event
-    meteor_event = OwO.event.custom_type()
-    OwO.time.set_timer(meteor_event, 500)
+## Meteor
+meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
+meteor_rect = meteor_surf.get_frect(center = (W / 2, H / 2))
 
-    while running:
-        dt = clock.tick(120) / 1000
-        # Event loop
-        for event in OwO.event.get():
-            if event.type == OwO.QUIT:
-                running = False
-            if event.type == meteor_event:
-                print('create meteor')
+## Lazer
+lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
+lazer_rect = lazer_surf.get_frect(bottomleft = (20, H - 20))
 
-        # Draw the game
+# Custom events -> Meteor event
+meteor_event = OwO.event.custom_type()
+OwO.time.set_timer(meteor_event, 500)
 
-        all_sprites.update(dt)
+while running:
+    dt = clock.tick(120) / 1000
+    # Event loop
+    for event in OwO.event.get():
+        if event.type == OwO.QUIT:
+            running = False
+        if event.type == meteor_event:
+            print('create meteor')
 
-        display.fill('darkgray')
-        display.blit(meteor_surf, meteor_rect)
-        display.blit(lazer_surf, lazer_rect)
+    # Draw the game
 
-        all_sprites.draw(display)
+    all_sprites.update(dt)
 
-        OwO.display.flip()
-    OwO.quit()
+    display.fill('darkgray')
+    display.blit(meteor_surf, meteor_rect)
+    display.blit(lazer_surf, lazer_rect)
 
-if __name__ == "__main__":
-    main()
+    all_sprites.draw(display)
+
+    OwO.display.flip()
+OwO.quit()
