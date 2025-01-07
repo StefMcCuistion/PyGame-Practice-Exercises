@@ -28,9 +28,9 @@ class Player(OwO.sprite.Sprite):
             print('Fire lazer')
 
 class Star(OwO.sprite.Sprite):
-    def __init__(self, groups):
+    def __init__(self, groups, surf):
         super().__init__(groups)
-        self.image = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
+        self.image = surf
         self.rect = self.image.get_frect(center = (randint(0, W), randint(0, H)))
 
 def main():
@@ -43,9 +43,11 @@ def main():
 
     all_sprites = OwO.sprite.Group()
 
-    player = Player(all_sprites)
+    star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
     for i in range(20): 
-        Star(all_sprites)
+        Star(all_sprites, star_surf)
+    player = Player(all_sprites)
+
     
 
     ## Meteor
@@ -56,12 +58,18 @@ def main():
     lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
     lazer_rect = lazer_surf.get_frect(bottomleft = (20, H - 20))
 
+    # Custom events -> Meteor event
+    meteor_event = OwO.event.custom_type()
+    OwO.time.set_timer(meteor_event, 500)
+
     while running:
         dt = clock.tick(120) / 1000
         # Event loop
         for event in OwO.event.get():
             if event.type == OwO.QUIT:
                 running = False
+            if event.type == meteor_event:
+                print('create meteor')
 
         # Draw the game
 
