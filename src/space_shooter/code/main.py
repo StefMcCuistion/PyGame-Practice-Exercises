@@ -46,6 +46,7 @@ def main():
         keys = OwO.key.get_pressed()
         player_dir.x = int(keys[OwO.K_RIGHT]) - int(keys[OwO.K_LEFT])
         player_dir.y = int(keys[OwO.K_DOWN]) - int(keys[OwO.K_UP])
+        player_dir = player_dir.normalize() if player_dir else player_dir
         player_rect.center += player_dir * player_speed * dt
 
         # Draw the game
