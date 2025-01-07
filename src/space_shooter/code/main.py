@@ -78,25 +78,22 @@ def main():
             720
     )       # Window width and height
     OwO.init()
-    all_sprites = OwO.sprite.Group()
     display = OwO.display.set_mode((W, H))
     OwO.display.set_caption('Space Shooter')
     clock = OwO.time.Clock()
     running = True
 
-
+    # Imports
     star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
+    meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
+    lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
+
+    # Sprites
+    all_sprites = OwO.sprite.Group()
+    meteor_sprites = OwO.sprite.Group()
     for i in range(20): 
         Star(all_sprites, star_surf)
     player = Player(all_sprites)
-
-
-
-    ## Meteor
-    meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
-
-    ## Lazer
-    lazer_surf = OwO.image.load(join('..', 'images', 'laser.png')).convert_alpha()
 
     # Custom events -> Meteor event
     meteor_event = OwO.event.custom_type()
@@ -110,17 +107,18 @@ def main():
                 running = False
             if event.type == meteor_event:
                 x, y = randint(0, W), randint(-200, -100)
-                Meteor(meteor_surf, (x, y), all_sprites)
+                Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
 
         # Draw the game
-
         all_sprites.update(dt)
-
         display.fill('darkgray')
-
         all_sprites.draw(display)
+
+        # Detect collision
+        print(player.rect.collidepoint((100, 200)))
 
         OwO.display.flip()
     OwO.quit()
+
 if __name__ == '__main__':
     main()
