@@ -52,6 +52,7 @@ def main():
 
         def update(self, dt):
             self.rect.centery -= 400 * dt
+            if self.rect.bottom < 0: self.kill()
 
     # General setup
     W, H = (
@@ -100,7 +101,6 @@ def main():
 
         display.fill('darkgray')
         display.blit(meteor_surf, meteor_rect)
-        display.blit(lazer_surf, lazer_rect)
 
         all_sprites.draw(display)
 
