@@ -25,6 +25,7 @@ def main():
     ## Player
     # player_surf = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
     # player_rect = player_surf.get_frect(bottomleft = (10, H - 10))
+    player = Player()
     player_dir = OwO.math.Vector2()
     player_speed = 300
 
@@ -56,7 +57,7 @@ def main():
         player_dir.x = int(keys[OwO.K_RIGHT]) - int(keys[OwO.K_LEFT])
         player_dir.y = int(keys[OwO.K_DOWN]) - int(keys[OwO.K_UP])
         player_dir = player_dir.normalize() if player_dir else player_dir
-        player_rect.center += player_dir * player_speed * dt
+        # player_rect.center += player_dir * player_speed * dt
 
         if recent_keys[OwO.K_SPACE]:
             print('Fire lazer')
@@ -66,6 +67,8 @@ def main():
         display.fill('darkgray')
         for pos in star_positions:
             display.blit(star_surf, pos)
+
+        display.blit(meteor_surf, meteor_rect)
 
         display.blit(lazer_surf, lazer_rect)
         ## Player movement
@@ -78,9 +81,7 @@ def main():
         #     player_dir.x *= -1
         # if player_rect.right >= W:
         #     player_dir.x *= -1
-        display.blit(player_surf, player_rect)
-
-        display.blit(meteor_surf, meteor_rect)
+        display.blit(player.image, player.rect)
 
         OwO.display.flip()
     OwO.quit()
