@@ -9,6 +9,7 @@ This is where I'll be keeping all my practice projects for learning PyGame! I'm 
 ## Resources
 ### Tutorials used:
 https://www.youtube.com/watch?v=AY9MnQ4x3zk&t=2038s
+
 https://www.youtube.com/watch?v=8OMghdHP-zs&pp=ygUQY2xlYXJjb2RlIHB5Z2FtZQ%3D%3D
 
 ## Notes
