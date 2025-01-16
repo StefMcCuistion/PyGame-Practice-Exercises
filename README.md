@@ -18,3 +18,19 @@ There are many tools you can use like ``pipx`` and ``poetry`` to assist with thi
 The command ``python -m venv .venv`` will create a virtual environment in the ``.venv`` folder. (Do this at the root)
 Then the command ``source ./venv/Scripts/Activate`` will activate the environment, and any console commands you enter afterwards will affect the virtual environment.
 Such as the command to install requirements from a ``requirements.txt`` file: ``pip install -r requirements.txt``
+As a temporary workaround, I'll have '.venv/pyvenv.cfg' read this on my laptop:
+```
+home = C:\Users\Stef McCuistion\AppData\Local\Programs\Python\Python312
+include-system-site-packages = false
+version = 3.12.5
+executable = C:\Users\Stef McCuistion\AppData\Local\Programs\Python\Python312\python.exe
+command = C:\Users\Stef McCuistion\AppData\Local\Programs\Python\Python312\python.exe -m venv C:\Users\Stef McCuistion\Desktop\Gamedev\PyGame-Practice-Exercises\.venv
+```
+...but this on my PC:
+```
+home = C:\Users\Stef\AppData\Local\Programs\Python\Python312
+include-system-site-packages = false
+version = 3.12.0
+executable = C:\Users\Stef McCuistion\AppData\Local\Programs\Python\Python312\python.exe
+command = C:\Users\Stef McCuistion\AppData\Local\Programs\Python\Python312\python.exe -m venv C:\Users\Stef McCuistion\Desktop\Gamedev\PyGame-Practice-Exercises\.venv
+```
