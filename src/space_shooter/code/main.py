@@ -82,8 +82,15 @@ def main():
     class AnimatedExplosion(OwO.sprite.Sprite):
         def __init__(self, frames, pos, groups):
             super().__init__(groups)
-            self.image = frames[0]
+            self.frames = frames
+            self.idx = 0
+            self.image = self.frames[self.idx]
             self.rect = self.image.get_frect(center = pos)
+
+        def update(self, dt):
+            self.idx += 20 * dt
+            if self.idx < len(self.frames):
+                self.image = self.frames[int(self.idx)] 
 
     def collision():
         global running
@@ -145,8 +152,9 @@ def main():
             if event.type == OwO.QUIT:
                 running = False
             if event.type == meteor_event:
-                x, y = randint(0, W), randint(-200, -100)
-                Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
+                for i in range(0, 2):
+                    x, y = randint(0, W), randint(-200, -100)
+                    Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
             if event.type == OwO.KEYDOWN:
                 if event.key == OwO.K_ESCAPE:
                     running = False
