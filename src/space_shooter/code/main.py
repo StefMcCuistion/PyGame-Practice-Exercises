@@ -139,6 +139,10 @@ def main():
         display.fill('#3a2e3f')
         all_sprites.draw(display)
         display_score()
+
+        # Draw test
+        OwO.draw.line(display, 'red', (0, 0), player.rect.center, 10)
+
         OwO.display.flip()
     OwO.quit()
 
