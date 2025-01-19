@@ -77,6 +77,7 @@ def main():
             # Rotation
             self.rotation += self.roto_speed * dt
             self.image = OwO.transform.rotozoom(self.og_surf, self.rotation, 1)
+            self.rect = self.image.get_frect(center = self.rect.center)
 
     def collision():
         global running
