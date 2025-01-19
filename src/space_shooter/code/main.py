@@ -96,6 +96,7 @@ def main():
             collided_sprites = OwO.sprite.spritecollide(lazer, meteor_sprites, True)
             if collided_sprites:
                 lazer.kill()
+                AnimatedExplosion(explosion_frames, lazer.rect.midtop, all_sprites)
 
     def display_score():
         current_time = OwO.time.get_ticks() // 100
@@ -122,7 +123,7 @@ def main():
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
     lazer_surf = OwO.image.load(join('..', 'images', 'lazer.png')).convert_alpha()
     font = OwO.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 40)
-    explosion_frames = [OwO.image.load(join('..', 'images', 'explosion', f'{i}.png')).convert_alpha for i in range(21)]
+    explosion_frames = [OwO.image.load(join('..', 'images', 'explosion', f'{i}.png')).convert_alpha() for i in range(21)]
 
 
     # Sprites
