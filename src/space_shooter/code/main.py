@@ -58,18 +58,25 @@ def main():
     class Meteor(OwO.sprite.Sprite):
         def __init__(self, surf, pos, groups):
             super().__init__(groups)
-            self.image = surf
+            self.og_surf = surf
+            self.image = self.og_surf
             self.rect = self.image.get_frect(center = pos)
             self.creation_time = OwO.time.get_ticks()
             self.lifespan = 3500
             self.dir = OwO.math.Vector2(uniform(-0.5, 0.5), 1)
             self.speed = randint(400, 500)
+            self.rotation = randint(0, 360)
+            self.roto_speed = randint(20, 40)
 
         def update(self, dt):
             self.rect.center += self.dir * self.speed * dt
             current_time = OwO.time.get_ticks()
             if self.lifespan < current_time - self.creation_time:
                 self.kill()
+
+            # Rotation
+            self.rotation += self.roto_speed * dt
+            self.image = OwO.transform.rotozoom(self.og_surf, self.rotation, 1)
 
     def collision():
         global running
