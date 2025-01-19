@@ -91,6 +91,8 @@ def main():
             self.idx += 20 * dt
             if self.idx < len(self.frames):
                 self.image = self.frames[int(self.idx)] 
+            else: 
+                self.kill()
 
     def collision():
         global running
