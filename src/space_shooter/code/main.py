@@ -6,10 +6,12 @@ def main():
     class Player(OwO.sprite.Sprite):
         def __init__(self, groups):
             super().__init__(groups)
-            self.image = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
+            self.og_surf = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
+            self.image = self.og_surf
             self.rect = self.image.get_frect(center = (W / 2, H / 2))
             self.dir = OwO.math.Vector2()
             self.speed = 300
+            self.rotation = 0
 
             # Cooldown
             self.can_shoot = True
@@ -42,6 +44,10 @@ def main():
                 self.laser_shoot_time = OwO.time.get_ticks()
 
             self.lazer_timer()
+
+            # Continuous rotation
+            self.rotation += 80 * dt
+            self.image = OwO.transform.rotozoom(self.og_surf, self.rotation, 1)
 
     class Star(OwO.sprite.Sprite):
         def __init__(self, groups, surf):
@@ -102,7 +108,7 @@ def main():
             720
     )       # Window width and height
     OwO.init()
-    display = OwO.display.set_mode((W, H))
+    display = OwO.display.set_mode((W, H), OwO.FULLSCREEN)
     OwO.display.set_caption('Space Shooter')
     clock = OwO.time.Clock()
     global running
