@@ -82,6 +82,11 @@ def main():
             if collided_sprites:
                 lazer.kill()
 
+    def display_score():
+        current_time = OwO.time.get_ticks() // 100
+        txt_surf = font.render(str(current_time), True, (240, 240, 240))
+        txt_rect = txt_surf.get_frect(midbottom = (W / 2, H - 50))
+        display.blit(txt_surf, txt_rect)
 
     # General setup
     W, H = (
@@ -99,8 +104,7 @@ def main():
     star_surf = OwO.image.load(join('..', 'images', 'star.png')).convert_alpha()
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
     lazer_surf = OwO.image.load(join('..', 'images', 'lazer.png')).convert_alpha()
-    font = OwO.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 20)
-    txt_surf = font.render('text', True, (240, 240, 240))
+    font = OwO.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 40)
 
     # Sprites
     all_sprites = OwO.sprite.Group()
@@ -134,7 +138,7 @@ def main():
         # Draw the game
         display.fill('#3a2e3f')
         all_sprites.draw(display)
-        display.blit(txt_surf, (0, 0))
+        display_score()
         OwO.display.flip()
     OwO.quit()
 
