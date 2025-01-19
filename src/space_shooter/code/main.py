@@ -16,6 +16,11 @@ def main():
             self.lazer_shoot_time = 0
             self.cooldown_duration = 400
 
+            # Mask
+            # self.mask = OwO.mask.from_surface(self.image)
+            # mask_surf = mask.to_surface()
+            # self.image = mask_surf
+
         def lazer_timer(self):
             if not self.can_shoot:
                 current_time = OwO.time.get_ticks()
@@ -49,6 +54,7 @@ def main():
             super().__init__(groups)
             self.image = surf
             self.rect = self.image.get_frect(midbottom = pos)
+            
 
         def update(self, dt):
             self.rect.centery -= 400 * dt
@@ -73,7 +79,7 @@ def main():
     def collision():
         global running
 
-        collision_sprites = OwO.sprite.spritecollide(player, meteor_sprites, False)
+        collision_sprites = OwO.sprite.spritecollide(player, meteor_sprites, False, OwO.sprite.collide_mask)
         if collision_sprites: 
             running = False
             print('collision')
@@ -86,7 +92,9 @@ def main():
         current_time = OwO.time.get_ticks() // 100
         txt_surf = font.render(str(current_time), True, (240, 240, 240))
         txt_rect = txt_surf.get_frect(midbottom = (W / 2, H - 50))
+        border_rect = txt_rect.inflate(20, 10).move(0, -8)
         display.blit(txt_surf, txt_rect)
+        OwO.draw.rect(display, (240, 240, 240), border_rect, 8, 8)
 
     # General setup
     W, H = (
@@ -139,9 +147,6 @@ def main():
         display.fill('#3a2e3f')
         all_sprites.draw(display)
         display_score()
-
-        # Draw test
-        OwO.draw.line(display, 'red', (0, 0), player.rect.center, 10)
 
         OwO.display.flip()
     OwO.quit()
