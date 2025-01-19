@@ -100,7 +100,7 @@ def main():
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
     lazer_surf = OwO.image.load(join('..', 'images', 'lazer.png')).convert_alpha()
     font = OwO.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 20)
-    txt_surf = font.render('text', True, 'red')
+    txt_surf = font.render('text', True, (240, 240, 240))
 
     # Sprites
     all_sprites = OwO.sprite.Group()
@@ -132,7 +132,7 @@ def main():
         collision()
 
         # Draw the game
-        display.fill('darkgray')
+        display.fill('#3a2e3f')
         all_sprites.draw(display)
         display.blit(txt_surf, (0, 0))
         OwO.display.flip()
