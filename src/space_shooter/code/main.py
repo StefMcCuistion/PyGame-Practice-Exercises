@@ -6,22 +6,15 @@ def main():
     class Player(OwO.sprite.Sprite):
         def __init__(self, groups):
             super().__init__(groups)
-            self.og_surf = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
-            self.image = self.og_surf
+            self.image = OwO.image.load(join('..', 'images', 'player.png')).convert_alpha()
             self.rect = self.image.get_frect(center = (W / 2, H / 2))
             self.dir = OwO.math.Vector2()
             self.speed = 300
-            self.rotation = 0
 
             # Cooldown
             self.can_shoot = True
             self.lazer_shoot_time = 0
             self.cooldown_duration = 400
-
-            # Mask
-            # self.mask = OwO.mask.from_surface(self.image)
-            # mask_surf = mask.to_surface()
-            # self.image = mask_surf
 
         def lazer_timer(self):
             if not self.can_shoot:
@@ -44,10 +37,6 @@ def main():
                 self.laser_shoot_time = OwO.time.get_ticks()
 
             self.lazer_timer()
-
-            # Continuous rotation
-            self.rotation += 80 * dt
-            self.image = OwO.transform.rotozoom(self.og_surf, self.rotation, 1)
 
     class Star(OwO.sprite.Sprite):
         def __init__(self, groups, surf):
