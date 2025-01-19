@@ -123,6 +123,9 @@ def main():
             if event.type == meteor_event:
                 x, y = randint(0, W), randint(-200, -100)
                 Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
+            if event.type == OwO.KEYDOWN:
+                if event.key == OwO.K_ESCAPE:
+                    running = False
 
         # Update
         all_sprites.update(dt)
