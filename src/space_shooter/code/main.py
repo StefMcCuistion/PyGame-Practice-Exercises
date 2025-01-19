@@ -79,6 +79,12 @@ def main():
             self.image = OwO.transform.rotozoom(self.og_surf, self.rotation, 1)
             self.rect = self.image.get_frect(center = self.rect.center)
 
+    class AnimatedExplosion(OwO.sprite.Sprite):
+        def __init__(self, frames, pos, groups):
+            super().__init__(groups)
+            self.image = frames[0]
+            self.rect = self.image.get_frect(center = pos)
+
     def collision():
         global running
 
@@ -105,7 +111,7 @@ def main():
             720
     )       # Window width and height
     OwO.init()
-    display = OwO.display.set_mode((W, H), OwO.FULLSCREEN)
+    display = OwO.display.set_mode((W, H))
     OwO.display.set_caption('Space Shooter')
     clock = OwO.time.Clock()
     global running
@@ -116,6 +122,8 @@ def main():
     meteor_surf = OwO.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
     lazer_surf = OwO.image.load(join('..', 'images', 'lazer.png')).convert_alpha()
     font = OwO.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 40)
+    explosion_frames = [OwO.image.load(join('..', 'images', 'explosion', f'{i}.png')).convert_alpha for i in range(21)]
+
 
     # Sprites
     all_sprites = OwO.sprite.Group()
