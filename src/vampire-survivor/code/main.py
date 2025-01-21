@@ -17,6 +17,12 @@ class Game():
             self.dir.y = int(keys[pg.K_DOWN]) - int(keys[pg.K_UP])
             self.dir = self.dir.normalize() if self.dir else self.dir
             self.rect.center += self.dir * self.speed * dt
+            if self.dir:
+                self.frame_idx += 5 * dt
+            else: 
+                self.frame_idx = 0
+            self.image = self.frames[int(self.frame_idx) % len(self.frames)]
+
 
     
     # Setup
