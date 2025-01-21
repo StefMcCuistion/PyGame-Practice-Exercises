@@ -35,6 +35,7 @@ def main():
                 Lazer(lazer_surf, self.rect.midtop, (all_sprites, lazer_sprites))
                 self.can_shoot = False
                 self.laser_shoot_time = OwO.time.get_ticks()
+                lazer_sound.play()
 
             self.lazer_timer()
 
@@ -86,6 +87,8 @@ def main():
             self.idx = 0
             self.image = self.frames[self.idx]
             self.rect = self.image.get_frect(center = pos)
+            explosion_sound.play()
+
 
         def update(self, dt):
             self.idx += 20 * dt
@@ -134,6 +137,15 @@ def main():
     font = OwO.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 40)
     explosion_frames = [OwO.image.load(join('..', 'images', 'explosion', f'{i}.png')).convert_alpha() for i in range(21)]
 
+    lazer_sound = OwO.mixer.Sound(join('..', 'audio', 'laser.wav'))
+    lazer_sound.set_volume(.5)
+    explosion_sound = OwO.mixer.Sound(join('..', 'audio', 'explosion.wav'))
+    explosion_sound.set_volume(.5)
+    damage_sound = OwO.mixer.Sound(join('..', 'audio', 'damage.ogg'))
+    bg_music = OwO.mixer.Sound(join('..', 'audio', 'game_music.wav'))
+    bg_music.set_volume(.1)
+
+    bg_music.play(-1)
 
     # Sprites
     all_sprites = OwO.sprite.Group()
