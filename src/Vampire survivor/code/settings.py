@@ -1,6 +1,10 @@
-import pygame 
-from os.path import join 
+import pygame as pg
+from os.path import join
 from os import walk
 
-WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720 
-TILE_SIZE = 64
+W, H = (
+        1280, 
+        720,
+)       # Window width and height
+
+TITLE_SIZE = 64
