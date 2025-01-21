@@ -60,3 +60,6 @@ class Game():
 
         pg.display.flip()
     pg.quit()
+
+game = Game()
+game.run
