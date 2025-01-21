@@ -141,7 +141,6 @@ def main():
     lazer_sound.set_volume(.5)
     explosion_sound = OwO.mixer.Sound(join('..', 'audio', 'explosion.wav'))
     explosion_sound.set_volume(.5)
-    damage_sound = OwO.mixer.Sound(join('..', 'audio', 'damage.ogg'))
     bg_music = OwO.mixer.Sound(join('..', 'audio', 'game_music.wav'))
     bg_music.set_volume(.1)
 
