@@ -24,10 +24,14 @@ class Player(pg.sprite.Sprite):
 
     def movement(self, dt):
         self.rect.x += self.dir.x * self.speed * dt
+        self.collision('horizontal')
         self.rect.y += self.dir.y * self.speed * dt
+        self.collision('vertical')
 
     def collision(self, dir):
-        pass
+        for sprite in self.collision_sprites:
+            if sprite.rect.colliderect(self.rect):
+                print('overlap')
 
     def input(self):
         keys = pg.key.get_pressed()
