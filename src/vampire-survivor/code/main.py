@@ -25,7 +25,6 @@ class Game():
 
         # Sprites
         self.setup()
-
         self.player = Player((W / 2, H / 2), self.player_down_frames, self.all_sprites, self.collision_sprites)
 
 
