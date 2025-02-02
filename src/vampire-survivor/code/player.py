@@ -7,6 +7,7 @@ class Player(pg.sprite.Sprite):
         self.frame_idx = 0
         self.image = self.frames[self.frame_idx]
         self.rect = self.image.get_frect(center = pos)
+        self.hitbox = self.rect.inflate(-60, 0)
 
         # Movement
         self.dir = pg.math.Vector2()
@@ -23,20 +24,21 @@ class Player(pg.sprite.Sprite):
         self.image = self.frames[int(self.frame_idx) % len(self.frames)]
 
     def movement(self, dt):
-        self.rect.x += self.dir.x * self.speed * dt
+        self.hitbox.x += self.dir.x * self.speed * dt
         self.collision('horizontal')
-        self.rect.y += self.dir.y * self.speed * dt
+        self.hitbox.y += self.dir.y * self.speed * dt
         self.collision('vertical')
+        self.rect.center = self.hitbox.center
 
     def collision(self, dir):
         for sprite in self.collision_sprites:
-            if sprite.rect.colliderect(self.rect):
+            if sprite.rect.colliderect(self.hitbox):
                 if dir == 'horizontal':
-                    if self.dir.x > 0: self.rect.right = sprite.rect.left
-                    if self.dir.x < 0: self.rect.left = sprite.rect.right
+                    if self.dir.x > 0: self.hitbox.right = sprite.rect.left
+                    if self.dir.x < 0: self.hitbox.left = sprite.rect.right
                 if dir == 'vertical':
-                    if self.dir.y > 0: self.rect.bottom = sprite.rect.top
-                    if self.dir.y < 0: self.rect.top = sprite.rect.bottom
+                    if self.dir.y > 0: self.hitbox.bottom = sprite.rect.top
+                    if self.dir.y < 0: self.hitbox.top = sprite.rect.bottom
 
     def input(self):
         keys = pg.key.get_pressed()
