@@ -33,6 +33,10 @@ class Player(pg.sprite.Sprite):
             if sprite.rect.colliderect(self.rect):
                 if dir == 'horizontal':
                     if self.dir.x > 0: self.rect.right = sprite.rect.left
+                    if self.dir.x < 0: self.rect.left = sprite.rect.right
+                if dir == 'vertical':
+                    if self.dir.y > 0: self.rect.bottom = sprite.rect.top
+                    if self.dir.y < 0: self.rect.top = sprite.rect.bottom
 
     def input(self):
         keys = pg.key.get_pressed()
