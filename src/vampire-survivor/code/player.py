@@ -31,7 +31,8 @@ class Player(pg.sprite.Sprite):
     def collision(self, dir):
         for sprite in self.collision_sprites:
             if sprite.rect.colliderect(self.rect):
-                print('overlap')
+                if dir == 'horizontal':
+                    if self.dir.x > 0: self.rect.right = sprite.rect.left
 
     def input(self):
         keys = pg.key.get_pressed()
