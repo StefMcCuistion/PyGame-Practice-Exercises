@@ -1,7 +1,7 @@
 from settings import *
 
 class CollisionSprite(pg.sprite.Sprite):
-    def __init__(self, pos, size, groups):
+    def __init__(self, pos, surf, groups):
         super().__init__(groups)
-        self.image = pg.Surface(size)
+        self.image = surf
         self.rect = self.image.get_frect(center = pos)
