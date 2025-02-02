@@ -24,7 +24,6 @@ class Player(pg.sprite.Sprite):
                         full_path = join(folder_path, file_name)
                         surf = pg.image.load(full_path).convert_alpha()
                         self.frames[state].append(surf)
-        print(self.frames)
 
     def animate(self, dt):
         # get state
@@ -34,7 +33,7 @@ class Player(pg.sprite.Sprite):
             self.state = 'down' if self.dir.y > 0 else 'up'
 
         # animate
-        self.frame_idx += 5 * dt
+        self.frame_idx += 5 * dt if self.dir else 0
         self.image = self.frames[self.state][int(self.frame_idx) % len(self.frames[self.state])]
 
     def update(self, dt):
