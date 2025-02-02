@@ -3,6 +3,7 @@ from player import Player
 from sprites import *
 from random import randint
 from pytmx.util_pygame import load_pygame
+from groups import AllSprites
 
 class Game():
     def __init__(self):
@@ -20,7 +21,7 @@ class Game():
         self.player_left_frames = [pg.image.load(join('..', 'images', 'player', 'left', f'{i}.png')).convert_alpha() for i in range(4)]
 
         # Groups
-        self.all_sprites = pg.sprite.Group()
+        self.all_sprites = AllSprites()
         self.collision_sprites = pg.sprite.Group()
 
         # Sprites
