@@ -26,7 +26,7 @@ class Game():
 
         # Sprites
         self.setup()
-        self.player = Player((W * .7, H / 4), self.player_down_frames, self.all_sprites, self.collision_sprites)
+        self.player = Player((26 * TILE_SIZE, 17 * TILE_SIZE), self.player_down_frames, self.all_sprites, self.collision_sprites)
 
 
     def setup(self):
@@ -54,7 +54,7 @@ class Game():
 
             # Draw the game
             self.display.fill('gray')
-            self.all_sprites.draw()
+            self.all_sprites.draw(self.player.rect.center)
             pg.display.flip()
 
         pg.quit()
