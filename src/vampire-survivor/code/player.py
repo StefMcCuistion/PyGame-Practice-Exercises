@@ -7,7 +7,7 @@ class Player(pg.sprite.Sprite):
         self.frame_idx = 0
         self.image = self.frames[self.frame_idx]
         self.rect = self.image.get_frect(center = pos)
-        self.hitbox = self.rect.inflate(-60, 0)
+        self.hitbox = self.rect.inflate(-60, -60)
 
         # Movement
         self.dir = pg.math.Vector2()
