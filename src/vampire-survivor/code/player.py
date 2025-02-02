@@ -1,11 +1,11 @@
 from settings import *
 
 class Player(pg.sprite.Sprite):
-    def __init__(self, pos, frames, groups, collision_sprites):
+    def __init__(self, pos, groups, collision_sprites):
         super().__init__(groups)
-        self.frames = frames
-        self.frame_idx = 0
-        self.image = self.frames[self.frame_idx]
+        self.load_imgs()
+        self.state, self.frame_idx = 'down', 0
+        self.image = pg.image.load(join('..', 'images', 'player', 'down', '0.png')).convert_alpha()
         self.rect = self.image.get_frect(center = pos)
         self.hitbox = self.rect.inflate(-60, -90)
 
@@ -14,14 +14,33 @@ class Player(pg.sprite.Sprite):
         self.speed = 300
         self.collision_sprites = collision_sprites
 
+    def load_imgs(self):
+        self.frames = {'left':[], 'right':[], 'up':[], 'down':[], }
+
+        for state in self.frames.keys():
+            for folder_path, sub_folders, file_names in walk(join('..', 'images', 'player', state)):
+                if file_names:
+                    for file_name in sorted(file_names, key = lambda name: int(name.split('.')[0])):
+                        full_path = join(folder_path, file_name)
+                        surf = pg.image.load(full_path).convert_alpha()
+                        self.frames[state].append(surf)
+        print(self.frames)
+
+    def animate(self, dt):
+        # get state
+        if self.dir.x != 0: 
+            self.state = 'right' if self.dir.x > 0 else 'left'
+        if self.dir.y != 0:
+            self.state = 'down' if self.dir.y > 0 else 'up'
+
+        # animate
+        self.frame_idx += 5 * dt
+        self.image = self.frames[self.state][int(self.frame_idx) % len(self.frames[self.state])]
+
     def update(self, dt):
         self.input()
         self.movement(dt)
-        if self.dir:
-            self.frame_idx += 5 * dt
-        else: 
-            self.frame_idx = 0
-        self.image = self.frames[int(self.frame_idx) % len(self.frames)]
+        self.animate(dt)
 
     def movement(self, dt):
         self.hitbox.x += self.dir.x * self.speed * dt

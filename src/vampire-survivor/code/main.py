@@ -15,10 +15,6 @@ class Game():
         self.running = True
 
         # Imports
-        self.player_up_frames = [pg.image.load(join('..', 'images', 'player', 'up', f'{i}.png')).convert_alpha() for i in range(4)]
-        self.player_right_frames = [pg.image.load(join('..', 'images', 'player', 'right', f'{i}.png')).convert_alpha() for i in range(4)]
-        self.player_down_frames = [pg.image.load(join('..', 'images', 'player', 'down', f'{i}.png')).convert_alpha() for i in range(4)]
-        self.player_left_frames = [pg.image.load(join('..', 'images', 'player', 'left', f'{i}.png')).convert_alpha() for i in range(4)]
 
         # Groups
         self.all_sprites = AllSprites()
@@ -42,7 +38,7 @@ class Game():
 
         for marker in map.get_layer_by_name('Entities'):
             if marker.name == 'Player':
-                self.player = Player((marker.x, marker.y), self.player_down_frames,
+                self.player = Player((marker.x, marker.y),
                                      self.all_sprites, self.collision_sprites)
                 
 
