@@ -41,7 +41,7 @@ class Game():
             self.all_sprites.draw(self.display)
             pg.display.flip()
 
-    pg.quit()
+        pg.quit()
 
 if __name__ == '__main__':
     game = Game()
