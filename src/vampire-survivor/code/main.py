@@ -34,6 +34,8 @@ class Game():
             Sprite((x * TILE_SIZE, y * TILE_SIZE), image, self.all_sprites)
         for obj in map.get_layer_by_name('Objects'):
             CollisionSprite((obj.x, obj.y), obj.image, (self.all_sprites, self.collision_sprites))
+        for box in map.get_layer_by_name('Collisions'):
+            CollisionSprite((box.x, box.y), pg.Surface((box.width, box.height)), self.collision_sprites)
 
     def run(self):
 
