@@ -26,7 +26,6 @@ class Game():
 
         # Sprites
         self.setup()
-        self.player = Player((26 * TILE_SIZE, 17 * TILE_SIZE), self.player_down_frames, self.all_sprites, self.collision_sprites)
 
 
     def setup(self):
@@ -38,7 +37,8 @@ class Game():
         for box in map.get_layer_by_name('Collisions'):
             CollisionSprite((box.x, box.y), pg.Surface((box.width, box.height)), self.collision_sprites)
         for marker in map.get_layer_by_name('Entities'):
-            print(marker)
+            if marker.name == 'Player':
+                self.player = Player((marker.x, marker.y), self.player_down_frames, self.all_sprites, self.collision_sprites)
 
     def run(self):
 
