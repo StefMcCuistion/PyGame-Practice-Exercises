@@ -1,7 +1,7 @@
 from settings import *
 
 class Player(pg.sprite.Sprite):
-    def __init__(self, pos, frames, groups):
+    def __init__(self, pos, frames, groups, collision_sprites):
         super().__init__(groups)
         self.frames = frames
         self.frame_idx = 0
