@@ -1,5 +1,7 @@
 from settings import *
 from player import Player
+from sprites import *
+from random import randint
 
 class Game():
     def __init__(self):
@@ -21,6 +23,10 @@ class Game():
 
         # Sprites
         self.player = Player((W / 2, H / 2), self.player_down_frames, self.all_sprites)
+        for i in range(6):
+            x, y = randint(0, W), randint(0, H)
+            w, h = randint(60, 100), randint(60,100)
+            CollisionSprite((x, y), (w, h), self.all_sprites)
 
     def run(self):
 
