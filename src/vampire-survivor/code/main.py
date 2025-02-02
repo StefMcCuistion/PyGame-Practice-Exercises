@@ -2,6 +2,7 @@ from settings import *
 from player import Player
 from sprites import *
 from random import randint
+from pytmx.util_pygame import load_pygame
 
 class Game():
     def __init__(self):
@@ -28,6 +29,12 @@ class Game():
             x, y = randint(0, W), randint(0, H)
             w, h = randint(60, 100), randint(60,100)
             CollisionSprite((x, y), (w, h), (self.all_sprites, self.collision_sprites))
+
+        self.setup()
+
+    def setup(self):
+        map = load_pygame(join('..', 'data', 'maps', 'world.tmx'))
+        print(map)
 
     def run(self):
 
