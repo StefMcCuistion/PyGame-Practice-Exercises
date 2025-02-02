@@ -24,18 +24,17 @@ class Game():
         self.collision_sprites = pg.sprite.Group()
 
         # Sprites
+        self.setup()
+
         self.player = Player((W / 2, H / 2), self.player_down_frames, self.all_sprites, self.collision_sprites)
 
-        self.setup()
 
     def setup(self):
         map = load_pygame(join('..', 'data', 'maps', 'world.tmx'))
+        for x, y, image in map.get_layer_by_name('Ground').tiles():
+            Sprite((x * TILE_SIZE, y * TILE_SIZE), image, self.all_sprites)
         for obj in map.get_layer_by_name('Objects'):
             CollisionSprite((obj.x, obj.y), obj.image, (self.all_sprites, self.collision_sprites))
-        for x, y, image in map.get_layer_by_name('Ground').tiles():
-            print(x)
-            print(y)
-            print(image)
 
     def run(self):
 

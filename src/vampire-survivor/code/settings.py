@@ -7,4 +7,4 @@ W, H = (
         720,
 )       # Window width and height
 
-TITLE_SIZE = 64
+TILE_SIZE = 64
