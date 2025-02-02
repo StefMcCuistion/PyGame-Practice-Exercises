@@ -11,6 +11,7 @@ class Player(pg.sprite.Sprite):
         # Movement
         self.dir = pg.math.Vector2()
         self.speed = 300
+        self.collision_sprites = collision_sprites
 
     def update(self, dt):
         self.input()
@@ -22,7 +23,11 @@ class Player(pg.sprite.Sprite):
         self.image = self.frames[int(self.frame_idx) % len(self.frames)]
 
     def movement(self, dt):
-        self.rect.center += self.dir * self.speed * dt
+        self.rect.x += self.dir.x * self.speed * dt
+        self.rect.y += self.dir.y * self.speed * dt
+
+    def collision(self, dir):
+        pass
 
     def input(self):
         keys = pg.key.get_pressed()
