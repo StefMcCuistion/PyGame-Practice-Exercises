@@ -14,8 +14,6 @@ class Game():
         self.clock = pg.time.Clock()
         self.running = True
 
-        # Imports
-
         # Groups
         self.all_sprites = AllSprites()
         self.collision_sprites = pg.sprite.Group()
@@ -40,6 +38,7 @@ class Game():
             if marker.name == 'Player':
                 self.player = Player((marker.x, marker.y),
                                      self.all_sprites, self.collision_sprites)
+                self.gun = Gun(self.player, self.all_sprites)
                 
 
     def run(self):
