@@ -26,5 +26,11 @@ class Gun(pg.sprite.Sprite):
         self.image = self.gun_surf
         self.rect = self.image.get_frect(center = self.player.rect.center + self.player_dir * self.distance)
 
+    def get_dir(self):
+        mouse_pos = pg.Vector2(pg.mouse.get_pos())
+        player_pos = pg.Vector2(W / 2, H / 2)
+        self.player_dir = (mouse_pos - player_pos).normalize()
+
     def update(self, _):
+        self.get_dir()
         self.rect.center = self.player.rect.center + self.player_dir * self.distance
